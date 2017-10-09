@@ -1,4 +1,4 @@
-# Project Title
+OSM MON Plugin
 
 One Paragraph of project description goes here
 
