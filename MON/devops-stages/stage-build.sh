@@ -17,31 +17,11 @@
 # under the License.
 
 # For those usages not covered by the Apache License, Version 2.0 please
-# contact: helena.mcgough@intel.com or adrian.hoban@intel.com
-##
+# contact: prithiv.mohan@intel.com or adrian.hoban@intel.com
 
-[metadata]
-name = MON
-summary = Monitoring module for OSM.
-description-file =
-    README.rst
-author = OSM
-home-page = https://osm.etsi.org/
-classifier =
-    Environment :: OSM
-    Intended Audience :: Information Technology
-    Intended Audience :: System Administrators
-    License :: ETSI Approved :: Apache Software License
-    Operating System :: POSIX :: Linux
-    Programming Language :: Python
-    Programming Language :: Python :: 2
-    Programming Language :: Python :: 2.7
-    Programming Language :: Python :: 3
-    Programming Language :: Python :: 3.5
+#__author__ = "Prithiv Mohan"
+#__date__   = "14/Sep/2017"
 
-[test]
-test_suite=test
-
-[files]
-packages =
-    pbr
+#!/bin/bash
+make clean all BRANCH=master
+make package

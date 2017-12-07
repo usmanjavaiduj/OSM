@@ -19,29 +19,58 @@
 # For those usages not covered by the Apache License, Version 2.0 please
 # contact: helena.mcgough@intel.com or adrian.hoban@intel.com
 ##
+*.py[cod]
 
-[metadata]
-name = MON
-summary = Monitoring module for OSM.
-description-file =
-    README.rst
-author = OSM
-home-page = https://osm.etsi.org/
-classifier =
-    Environment :: OSM
-    Intended Audience :: Information Technology
-    Intended Audience :: System Administrators
-    License :: ETSI Approved :: Apache Software License
-    Operating System :: POSIX :: Linux
-    Programming Language :: Python
-    Programming Language :: Python :: 2
-    Programming Language :: Python :: 2.7
-    Programming Language :: Python :: 3
-    Programming Language :: Python :: 3.5
+# C extensions
+*.so
 
-[test]
-test_suite=test
+# log files
+*.log
 
-[files]
-packages =
-    pbr
+# Packages
+*.egg
+*.egg-info
+dist
+build
+.eggs
+eggs
+parts
+bin
+var
+sdist
+develop-eggs
+.installed.cfg
+lib
+lib64
+
+# Installer logs
+pip-log.txt
+
+# Unit test / coverage reports
+.coverage
+.tox
+nosetests.xml
+.testrepository
+.venv
+.cache
+
+# Translations
+*.mo
+
+# Complexity
+output/*.html
+output/*/index.html
+
+# Sphinx
+doc/build
+
+# pbr generates these
+AUTHORS
+ChangeLog
+
+# Editors
+*~
+.*.swp
+.*sw?
+.settings/
+.__pycache__/

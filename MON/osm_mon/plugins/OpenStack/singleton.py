@@ -19,29 +19,22 @@
 # For those usages not covered by the Apache License, Version 2.0 please
 # contact: helena.mcgough@intel.com or adrian.hoban@intel.com
 ##
+"""Simple singleton class."""
 
-[metadata]
-name = MON
-summary = Monitoring module for OSM.
-description-file =
-    README.rst
-author = OSM
-home-page = https://osm.etsi.org/
-classifier =
-    Environment :: OSM
-    Intended Audience :: Information Technology
-    Intended Audience :: System Administrators
-    License :: ETSI Approved :: Apache Software License
-    Operating System :: POSIX :: Linux
-    Programming Language :: Python
-    Programming Language :: Python :: 2
-    Programming Language :: Python :: 2.7
-    Programming Language :: Python :: 3
-    Programming Language :: Python :: 3.5
+from __future__ import unicode_literals
 
-[test]
-test_suite=test
 
-[files]
-packages =
-    pbr
+class Singleton(object):
+    """Simple singleton class."""
+
+    def __init__(self, decorated):
+        """Initialize singleton instance."""
+        self._decorated = decorated
+
+    def instance(self):
+        """Return singleton instance."""
+        try:
+            return self._instance
+        except AttributeError:
+            self._instance = self._decorated()
+            return self._instance

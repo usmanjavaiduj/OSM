@@ -17,31 +17,29 @@
 # under the License.
 
 # For those usages not covered by the Apache License, Version 2.0 please
-# contact: helena.mcgough@intel.com or adrian.hoban@intel.com
-##
+# contact: prithiv.mohan@intel.com or adrian.hoban@intel.com
 
-[metadata]
-name = MON
-summary = Monitoring module for OSM.
-description-file =
-    README.rst
-author = OSM
-home-page = https://osm.etsi.org/
-classifier =
-    Environment :: OSM
-    Intended Audience :: Information Technology
-    Intended Audience :: System Administrators
-    License :: ETSI Approved :: Apache Software License
-    Operating System :: POSIX :: Linux
-    Programming Language :: Python
-    Programming Language :: Python :: 2
-    Programming Language :: Python :: 2.7
-    Programming Language :: Python :: 3
-    Programming Language :: Python :: 3.5
+mkdir -p /etc/systemd/system/
+cat  > /etc/systemd/system/kafka.service  << EOF
+[Unit]
+Description=Apache Kafka server (broker)
+Documentation=http://kafka.apache.org/documentation.html
+Requires=network.target remote-fs.target
+After=network.target remote-fs.target
 
-[test]
-test_suite=test
+[Service]
+Type=simple
+PIDFile=/var/run/kafka.pid
+#User=root
+#Group=kafka
+ExecStart=/opt/kafka/bin/kafka-server-start.sh /opt/kafka/config/server.properties
+ExecStop=/opt/kafka/bin/kafka-server-stop.sh
+Restart=on-failure
+SyslogIdentifier=kafka
 
-[files]
-packages =
-    pbr
+[Install]
+WantedBy=multi-user.target
+EOF
+systemctl daemon-reload
+systemctl enable kafka.service
+systemctl start kafka.service
