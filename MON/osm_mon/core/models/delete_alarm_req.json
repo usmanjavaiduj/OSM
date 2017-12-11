@@ -4,7 +4,7 @@
 "vim_type": "AWS",
 "alarm_delete_request":
 {
-"alarm_uuid": "CPU_Utilization_i-098da78cbd8304e17",
+"alarm_uuid": "CPU_Utilization_Above_Threshold_i-098da78cbd8304e17",
 "correlation_id": "SO123"
 }
 }

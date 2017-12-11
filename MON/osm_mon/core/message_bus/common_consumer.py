@@ -26,6 +26,7 @@ import os
 
 sys.path.append("/root/MON")
 sys.path.append("../../plugins/CloudWatch")
+
 logging.basicConfig(filename='MON_plugins.log',
                     format='%(asctime)s %(message)s',
                     datefmt='%m/%d/%Y %I:%M:%S %p', filemode='a',
@@ -35,10 +36,12 @@ log = logging.getLogger(__name__)
 from kafka import KafkaConsumer
 from kafka.errors import KafkaError
 
-#from osm_mon.plugins.OpenStack.Aodh import alarming
-#from osm_mon.plugins.OpenStack.common import Common
-#from osm_mon.plugins.OpenStack.Gnocchi import metrics
+from osm_mon.plugins.OpenStack.Aodh import alarming
+from osm_mon.plugins.OpenStack.common import Common
+from osm_mon.plugins.OpenStack.Gnocchi import metrics
+
 from plugin_alarm import plugin_alarms
+from plugin_metric import plugin_metrics
 
 # Initialize servers
 server = {'server': 'localhost:9092'}
@@ -48,14 +51,13 @@ common_consumer = KafkaConsumer(bootstrap_servers=server['server'])
 
 # Create OpenStack alarming and metric instances
 auth_token = None
-#openstack_auth = Common()
-#openstack_metrics = metrics.Metrics()
-#openstack_alarms = alarming.Alarming()
+openstack_auth = Common()
+openstack_metrics = metrics.Metrics()
+openstack_alarms = alarming.Alarming()
 
+# Create CloudWatch alarm and metric instances
 cloudwatch_alarms = plugin_alarms()
-cloudwatch_alarms.connection()
-
-
+cloudwatch_metrics = plugin_metrics()
 
 def get_vim_type(message):
     """Get the vim type that is required by the message."""
@@ -83,6 +85,7 @@ try:
                     message, openstack_auth, auth_token)
 
             elif vim_type == "aws":
+                cloudwatch_metrics.metric_calls(message)
                 log.info("This message is for the CloudWatch plugin.")
 
             elif vim_type == "vrops":
@@ -117,7 +120,8 @@ try:
                 log.info("This message is for the OpenStack plugin.")
                 auth_token = openstack_auth._authenticate(message=message)
 
-            elif vim_type == "cloudwatch":
+            elif vim_type == "aws":
+                #TODO Access credentials later
                 log.info("This message is for the CloudWatch plugin.")
 
             elif vim_type == "vrops":

@@ -58,7 +58,7 @@ class KafkaProducer(object):
 
         self.producer = kaf(
             key_serializer=str.encode,
-            value_serializer=lambda v: json.dumps(v),
+            value_serializer=str.encode,
             bootstrap_servers=broker, api_version=(0, 10))
 
     def publish(self, key, value, topic=None):
@@ -82,7 +82,7 @@ class KafkaProducer(object):
 
         payload_create_alarm = jsmin(open(os.path.join("../../core/models/create_alarm.json")).read())
         self.publish(key,
-                     value=json.loads(payload_create_alarm),
+                     value=payload_create_alarm,
                      topic='alarm_request')
 
     def create_alarm_response(self, key, message, topic):
@@ -99,28 +99,25 @@ class KafkaProducer(object):
 
         # Internal to MON
 
-        payload_acknowledge_alarm = jsmin(
-            open(os.path.join(json_path, 'acknowledge_alarm.json')).read())
+        payload_acknowledge_alarm = jsmin(open(os.path.join("../../core/models/acknowledge_alarm.json")).read())
 
         self.publish(key,
-                     value=json.dumps(payload_acknowledge_alarm),
+                     value=payload_acknowledge_alarm,
                      topic='alarm_request')
 
     def list_alarm_request(self, key, message, topic):
 
         # External to MON
 
-        payload_alarm_list_req = jsmin(
-            open(os.path.join(json_path, 'list_alarm_req.json')).read())
+        payload_alarm_list_req = jsmin(open(os.path.join("../../core/models/list_alarm_req.json")).read())
 
         self.publish(key,
-                     value=json.dumps(payload_alarm_list_req),
+                     value=payload_alarm_list_req,
                      topic='alarm_request')
 
     def notify_alarm(self, key, message, topic):
 
-        payload_notify_alarm = jsmin(
-            open(os.path.join(json_path, 'notify_alarm.json')).read())
+        payload_notify_alarm = jsmin(open(os.path.join("../../core/models/notify_alarm.json")).read())
 
         self.publish(key,
                      value=message,
@@ -128,8 +125,7 @@ class KafkaProducer(object):
 
     def list_alarm_response(self, key, message, topic):
 
-        payload_list_alarm_resp = jsmin(
-            open(os.path.join(json_path, 'list_alarm_resp.json')).read())
+        payload_list_alarm_resp = jsmin(open(os.path.join("../../core/models/list_alarm_resp.json")).read())
 
         self.publish(key,
                      value=message,
@@ -139,19 +135,17 @@ class KafkaProducer(object):
 
         # External to Mon
 
-        payload_update_alarm_req = jsmin(
-            open(os.path.join(json_path, 'update_alarm_req.json')).read())
+        payload_update_alarm_req = jsmin(open(os.path.join("../../core/models/update_alarm_req.json")).read())
 
         self.publish(key,
-                     value=json.dumps(payload_update_alarm_req),
+                     value=payload_update_alarm_req,
                      topic='alarm_request')
 
     def update_alarm_response(self, key, message, topic):
 
         # Internal to Mon
 
-        payload_update_alarm_resp = jsmin(
-            open(os.path.join(json_path, 'update_alarm_resp.json')).read())
+        payload_update_alarm_resp = jsmin(open(os.path.join("../../core/models/update_alarm_resp.json")).read())
 
         self.publish(key,
                      value=message,
@@ -165,7 +159,7 @@ class KafkaProducer(object):
         
 
         self.publish(key,
-                     value=json.loads(payload_delete_alarm_req),
+                     value=payload_delete_alarm_req,
                      topic='alarm_request')
 
     def delete_alarm_response(self, key, message, topic):
@@ -183,19 +177,17 @@ class KafkaProducer(object):
 
         # External to Mon
 
-        payload_create_metrics_req = jsmin(
-            open(os.path.join(json_path, 'create_metric_req.json')).read())
+        payload_create_metrics_req = jsmin(open(os.path.join("../../core/models/create_metric_req.json")).read())
 
         self.publish(key,
-                     value=json.dumps(payload_create_metrics_req),
+                     value=payload_create_metrics_req,
                      topic='metric_request')
 
     def create_metrics_resp(self, key, message, topic):
 
         # Internal to Mon
 
-        payload_create_metrics_resp = jsmin(
-            open(os.path.join(json_path, 'create_metric_resp.json')).read())
+        payload_create_metrics_resp = jsmin(open(os.path.join("../../core/models/create_metric_resp.json")).read())
 
         self.publish(key,
                      value=message,
@@ -205,19 +197,17 @@ class KafkaProducer(object):
 
         # External to Mon
 
-        payload_read_metric_data_request = jsmin(
-            open(os.path.join(json_path, 'read_metric_data_req.json')).read())
-
+        payload_read_metric_data_request = jsmin(open(os.path.join("../../core/models/read_metric_data_req.json")).read())
+   
         self.publish(key,
-                     value=json.dumps(payload_read_metric_data_request),
+                     value=payload_read_metric_data_request,
                      topic='metric_request')
 
     def read_metric_data_response(self, key, message, topic):
 
         # Internal to Mon
 
-        payload_metric_data_response = jsmin(
-            open(os.path.join(json_path, 'read_metric_data_resp.json')).read())
+        payload_metric_data_response = jsmin(open(os.path.join("../../core/models/read_metric_data_resp.json")).read())
 
         self.publish(key,
                      value=message,
@@ -227,19 +217,17 @@ class KafkaProducer(object):
 
         # External to MON
 
-        payload_metric_list_req = jsmin(
-            open(os.path.join(json_path, 'list_metric_req.json')).read())
+        payload_metric_list_req = jsmin(open(os.path.join("../../core/models/list_metric_req.json")).read())
 
         self.publish(key,
-                     value=json.dumps(payload_metric_list_req),
+                     value=payload_metric_list_req,
                      topic='metric_request')
 
     def list_metric_response(self, key, message, topic):
 
         # Internal to MON
 
-        payload_metric_list_resp = jsmin(
-            open(os.path.join(json_path, 'list_metrics_resp.json')).read())
+        payload_metric_list_resp = jsmin(open(os.path.join("../../core/models/list_metrics_resp.json")).read())
 
         self.publish(key,
                      value=message,
@@ -249,19 +237,17 @@ class KafkaProducer(object):
 
         # External to Mon
 
-        payload_delete_metric_req = jsmin(
-            open(os.path.join(json_path, 'delete_metric_req.json')).read())
+        payload_delete_metric_req = jsmin(open(os.path.join("../../core/models/delete_metric_req.json")).read())
 
         self.publish(key,
-                     value=json.dumps(payload_delete_metric_req),
+                     value=payload_delete_metric_req,
                      topic='metric_request')
 
     def delete_metric_response(self, key, message, topic):
 
         # Internal to Mon
 
-        payload_delete_metric_resp = jsmin(
-            open(os.path.join(json_path, 'delete_metric_resp.json')).read())
+        payload_delete_metric_resp = jsmin(open(os.path.join("../../core/models/delete_metric_resp.json")).read())
 
         self.publish(key,
                      value=message,
@@ -271,19 +257,17 @@ class KafkaProducer(object):
 
         # External to Mon
 
-        payload_update_metric_req = jsmin(
-            open(os.path.join(json_path, 'update_metric_req.json')).read())
+        payload_update_metric_req = jsmin(open(os.path.join("../../core/models/update_metric_req.json")).read())
 
         self.publish(key,
-                     value=json.dumps(payload_update_metric_req),
+                     value=payload_update_metric_req,
                      topic='metric_request')
 
     def update_metric_response(self, key, message, topic):
 
         # Internal to Mon
 
-        payload_update_metric_resp = jsmin(
-            open(os.path.join(json_path, 'update_metric_resp.json')).read())
+        payload_update_metric_resp = jsmin(open(os.path.join("../../core/models/update_metric_resp.json")).read())
 
         self.publish(key,
                      value=message,
@@ -295,5 +279,5 @@ class KafkaProducer(object):
             open(os.path.join(json_path, 'access_credentials.json')).read())
 
         self.publish(key,
-                     value=json.dumps(payload_access_credentials),
+                     value=payload_access_credentials,
                      topic='access_credentials')

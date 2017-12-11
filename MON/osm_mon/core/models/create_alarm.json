@@ -5,7 +5,7 @@
 "alarm_create_request":
 {
 "correlation_id": "SO123",
-"alarm_name": "CPU_Utilization",
+"alarm_name": "CPU_Utilization_Above_Threshold",
 "resource_uuid": "i-098da78cbd8304e17",
 "description": "",
 "severity": "Critical",

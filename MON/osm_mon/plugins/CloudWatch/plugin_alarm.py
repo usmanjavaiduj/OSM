@@ -42,6 +42,7 @@ class plugin_alarms():
         self.conn = Connection()
         self.metricAlarm = MetricAlarm()
         self.metric = Metrics()
+        self.connection()
         self.producer = KafkaProducer('')     
 #---------------------------------------------------------------------------------------------------------------------------      
     def connection(self):
@@ -96,8 +97,7 @@ class plugin_alarms():
                         self.producer.create_alarm_response(key='create_alarm_response',message=payload,topic = 'alarm_response')
              
                     else: 
-                        payload = json.dumps(config_resp) 
-                        print payload                                 
+                        payload = json.dumps(config_resp)                                
                         file = open('../../core/models/create_alarm_resp.json','wb').write((payload))                           
                         self.producer.create_alarm_response(key='create_alarm_response',message=payload,topic = 'alarm_response')
                         log.info("New alarm created with alarm info: %s", config_resp)                           
